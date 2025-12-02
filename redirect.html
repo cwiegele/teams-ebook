@@ -1,42 +1,132 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Lasik eBook</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    body { font-family: system-ui, Segoe UI, Arial, sans-serif; margin: 24px; }
-    .wrap { max-width: 640px; margin: 0 auto; text-align: center; }
-    h1 { font-size: 1.25rem; margin-bottom: 0.5rem; }
-    p  { color: #616161; }
-    a.button {
-      display: inline-block; margin-top: 16px; padding: 10px 16px;
-      background: #107C10; color: #fff; text-decoration: none; border-radius: 4px;
-    }
-    #status { margin-top: 10px; color: #616161; }
-  </style>
-  <script src="https://res.cdn.office.net/teams-js/2.0.0/js/MicrosoftTeams.min.js"></script>
-  <div class="wrap">
-    <h1>Opening Lasik eBook in your browser…</h1>
-    <p>If it doesn’t open automatically, use the button below.</p>
-    <a class="button" href="https://lasikplus.sharepoint.com/sites/LasikBook" target="_blank">Open Lasik eBook</a>
-ript>
-    const targetUrl = "https://lasikplus.sharepoint.com/sites/LasikBook";
-    (async () => {
-      try {
-        await microsoftTeams.app.initialize();
-        document.getElementById('status').textContent = 'Launching…';
-        microsoftTeams.app.openLink(targetUrl);
-      } catch (e) {
-        document.getElementById('status').textContent = 'If it did not open, click the button above.';
-      }
-      setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          document.getElementById('status').textContent = 'If it did not open, click the button above.';
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lasik eBook</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
         }
-      }, 1500);
-    })();
-  </script>
+        .container {
+            text-align: center;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            max-width: 600px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            margin-bottom: 15px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 35px;
+            opacity: 0.95;
+        }
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 5px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .status {
+            font-size: 1.1em;
+            margin-top: 25px;
+            opacity: 0.9;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            margin-top: 30px;
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: #f8f9fa;
+        }
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.3);
+            border-radius: 10px;
+            font-size: 1em;
+        }
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📚</div>
+        <h1>Lasik eBook Training</h1>
+        <p class="subtitle">Quick access to your training resources</p>
+        <div class="spinner"></div>
+        <p class="status" id="status">Opening SharePoint in your browser...</p>
+        <div class="success-message" id="success">
+            ✓ Browser window opened successfully!
+        </div>
+        <a href="https://lasikplus.sharepoint.com/sites/LasikeBook" class="btn" target="_blank" id="manualBtn" onclick="openSite(); return false;">
+            Open Manually
+        </a>
+    </div>
+
+    <script>
+        function openSite() {
+            window.open('https://lasikplus.sharepoint.com/sites/LasikeBook', '_blank');
+            document.getElementById('success').classList.add('show');
+            document.getElementById('status').textContent = 'Site opened in new window';
+        }
+
+        // Auto-open after a brief delay to show the nice loading screen
+        setTimeout(function() {
+            openSite();
+        }, 800);
+    </script>
 </body>
 </html>
