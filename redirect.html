@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -9,21 +9,50 @@
     body { font-family: system-ui, Segoe UI, Arial, sans-serif; margin: 24px; }
     .wrap { max-width: 640px; margin: 0 auto; text-align: center; }
     h1 { font-size: 1.25rem; margin-bottom: 0.5rem; }
-    p { color: #616161; }
+    p  { color: #616161; }
     a.button {
       display: inline-block; margin-top: 16px; padding: 10px 16px;
       background: #107C10; color: #fff; text-decoration: none; border-radius: 4px;
     }
+    #status { margin-top: 10px; color: #616161; }
   </style>
-  <script src="https://res.cdn.office.net/teams-js/2.0.0/js/MicrosoftTeams.min.jsead>
-<body>
-  <div class="wrap">
-    <h1>Opening Lasik eBook in your browser…</h1>
-    <p>If it doesn’t open automatically, use the button below.</p>
-    <a class="button" href="https://lasikplus.sharepoint.com/sites/LasikBook" target="_blank" relconst targetUrl = "https://lasikplus.sharepoint.com/sites/LasikBook";
-    microsoftTeams.app.initialize().then(() => {
-      microsoftTeams.openLink(targetUrl);
-    });
+
+  <!-- ✅ Proper TeamsJS v2 include -->
+  <script src="https://res.cdn.office.net/teams-js/2.0.0/js/MicrosoftTeams.min.js"
+          integrity="sha384-QtTBFeFlfRDZBfwHJHYQp7MdLJ2C3sfAEB1Qpy+YblvjavBye+q87TELpTnvlXw4"
+          crossorigin="anonymous"></script>
+</head/p>
+
+    <!-- Manual fallback (always works) -->
+    <a class="button" id="openBtn"
+       href="https://lasikplus.sharepoint.com/sites/LasikBook"
+       target="_blank" rel="noopener">Open Lasik eBook</a>
+
+    <div id="status"></div>
+  </Book";
+
+    (async () => {
+      try {
+        // Initialize TeamsJS v2 before calling app APIs
+        await microsoftTeams.app.initialize(); // v2 init
+        document.getElementById('status').textContent = 'Launching…';
+
+        // ✅ Open external link in the default/system browser
+        microsoftTeams.app.openLink(targetUrl); // v2 app.openLink
+      } catch (e) {
+        // SDK failed to init—show fallback message
+        document.getElementById('status').textContent =
+          'If it did not open, click the button above.';
+      }
+
+      // Gentle fallback: if programmatic open didn’t happen, keep the message visible
+      setTimeout(() => {
+        if (document.visibilityState === 'visible') {
+          document.getElementById('status').textContent =
+            'If it did not open, click the button above.';
+        }
+      }, 1500);
+    })();
   </script>
 </body>
 </html>
