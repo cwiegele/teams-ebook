@@ -1,100 +1,42 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lasik eBook</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+  <meta charset="utf-8" />
+  <title>Lasik eBook</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: system-ui, Segoe UI, Arial, sans-serif; margin: 24px; }
+    .wrap { max-width: 640px; margin: 0 auto; text-align: center; }
+    h1 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    p  { color: #616161; }
+    a.button {
+      display: inline-block; margin-top: 16px; padding: 10px 16px;
+      background: #107C10; color: #fff; text-decoration: none; border-radius: 4px;
+    }
+    #status { margin-top: 10px; color: #616161; }
+  </style>
+  <script src="https://res.cdn.office.net/teams-js/2.0.0/js/MicrosoftTeams.min.js"></script>
+  <div class="wrap">
+    <h1>Opening Lasik eBook in your browser…</h1>
+    <p>If it doesn’t open automatically, use the button below.</p>
+    <a class="button" href="https://lasikplus.sharepoint.com/sites/LasikBook" target="_blank">Open Lasik eBook</a>
+ript>
+    const targetUrl = "https://lasikplus.sharepoint.com/sites/LasikBook";
+    (async () => {
+      try {
+        await microsoftTeams.app.initialize();
+        document.getElementById('status').textContent = 'Launching…';
+        microsoftTeams.app.openLink(targetUrl);
+      } catch (e) {
+        document.getElementById('status').textContent = 'If it did not open, click the button above.';
+      }
+      setTimeout(() => {
+        if (document.visibilityState === 'visible') {
+          document.getElementById('status').textContent = 'If it did not open, click the button above.';
         }
-        .container {
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            max-width: 500px;
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
-        p {
-            margin-bottom: 30px;
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 4px solid white;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.2em;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-    </style>
-    <script>
-        // Immediate redirect - execute before page even loads
-        (function() {
-            var url = 'https://lasikplus.sharepoint.com/sites/LasikeBook';
-            
-            // Try multiple redirect methods simultaneously
-            window.location.replace(url);
-            window.location.href = url;
-            window.open(url, '_blank');
-            
-            // Also try opening with protocol handler
-            setTimeout(function() {
-                window.location = url;
-            }, 100);
-        })();
-    </script>
-</head>
-<body>
-    <div class="container">
-        <div class="icon">📚</div>
-        <h1>Lasik eBook Training Guide</h1>
-        <div class="spinner"></div>
-        <p>Opening SharePoint in your browser...</p>
-        <a href="https://lasikplus.sharepoint.com/sites/LasikeBook" class="btn" target="_blank" onclick="window.open(this.href, '_blank'); return false;">
-            Click here to open manually
-        </a>
-    </div>
+      }, 1500);
+    })();
+  </script>
 </body>
 </html>
